@@ -280,9 +280,9 @@ OCW是很好的資源，上課的過程中可以知道一些額外的內容與�
 
 ### 研究領域相關課程
 
-{% folding gray, Computer vision & DIP %}
+{% folding gray, Computer vision & DIP、AI %}
 {% flink %}
-- class_name: 英文教學
+- class_name: Computer vision & DIP
   class_desc: 
   link_list:
     - name: Murtaza's Workshop - Robotics and AI
@@ -294,6 +294,14 @@ OCW是很好的資源，上課的過程中可以知道一些額外的內容與�
       avatar: https://yt3.googleusercontent.com/ytc/AIdro_lBsjXx6eJ7L26I_dGpRjq8mUkuSmbw8D2_ksKu8w=s176-c-k-c0x00ffffff-no-rj
       descr: Basic/Advanced diversity courses
 
+- class_name: AI
+  class_desc: 
+  link_list:
+    - name: Hung-yi Lee (NTU)
+      link: https://www.youtube.com/@HungyiLeeNTU
+      avatar: https://yt3.googleusercontent.com/ytc/AIdro_keGEwFH-1ch40d9Vr-78BS9OWeUfMbEFGvKxcAPg=s176-c-k-c0x00ffffff-no-rj
+      descr: DL、ML、AI
+      
 {% endflink %}
 {% endfolding %}
 
