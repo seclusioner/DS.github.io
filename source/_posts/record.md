@@ -3,7 +3,7 @@ title: 雲創盃紀錄
 layout: learn
 date: 2022-11-11 00:49:16
 tags: [學習]
-cover: /images/post/record.jpg
+cover: https://raw.githubusercontent.com/seclusioner/DS.github.io/refs/heads/main/images/post/record.jpg
 top_img: https://th.bing.com/th/id/R.d34234886c3675f5d71691f06b9270fd?rik=ZGVRui9qBJ2JQg&riu=http%3a%2f%2fi.huffpost.com%2fgen%2f2395634%2fimages%2fo-DIARY-facebook.jpg&ehk=3HLfSuADZGyVOXZqzDgT5gUHIHnvNPVRISFLsHwNe%2b4%3d&risl=&pid=ImgRaw&r=0
 author: D.S.
 description: 抒發系列、記錄
