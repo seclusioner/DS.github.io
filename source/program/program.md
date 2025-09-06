@@ -99,7 +99,7 @@ nvcc -V
 成功後會看到相關資訊。
 
 ## Install cuDNN (CUDA Deep Neural Network library)
-NVIDIA 專門為深度學習開發的函式庫， 不需任何程式設計即可使用，安裝網站：https://developer.nvidia.com/cudnn，下載時會要求你登入才可以下載，我是直接用google帳號登入
+NVIDIA 專門為深度學習開發的函式庫， 不需任何程式設計即可使用，[安裝網站](https://developer.nvidia.com/cudnn)，下載時會要求你登入才可以下載，我是直接用google帳號登入
 
 下載壓縮檔時也要挑選版本，我自己是會去[這裡](https://developer.download.nvidia.com/compute/cudnn/redist/cudnn/windows-x86_64/)挑，或是也可以直接問GPT再自己做確認，例如我選的是`cudnn-windows-x86_64-9.12.0.46_cuda12-archive`
 
@@ -192,9 +192,10 @@ git config --global user.email "email"
 ```
 
 ## gcc / g++ 編譯器 (寫C/C++使用)
-我安裝的是MinGW安裝 MinGW-w64（提供 GCC 編譯器）
+我安裝的是MinGW安裝 MinGW-w64（提供 GCC 編譯器），一樣要注意位元架構要與OS一致（x64）
 
-下載網址：https://www.winlibs.com/，一樣要注意位元架構要與OS一致（x64）
+下載網址：https://www.winlibs.com/
+
 下載LATEST的GCC編譯器，並解壓縮，然後將該目錄下的`\bin`目錄路徑加到系統環境變數，路徑會類似下面這個(主要是看`/bin`在哪)：
 
 ``` bash
