@@ -2,7 +2,7 @@
 title: 熬夜の藉口
 date: 2023-04-07 22:20:20
 tags: [小記]
-cover: https://img.ixintu.com/download/jpg/201910/66dd402077da00f31c33987fd0f6c49b.jpg!con
+cover: https://tse4.mm.bing.net/th/id/OIP.YSzeCi_5jMs2Yr7gO61IwwHaFA?cb=ucfimgc2&rs=1&pid=ImgDetMain&o=7&rm=3
 author: D.S.
 description: 抒發系列、記錄
 categories:

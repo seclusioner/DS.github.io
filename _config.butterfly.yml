@@ -506,6 +506,7 @@ site_verification:
 # Theme color for customize
 # Notice: color value must in double quotes like "#000" or may cause error!
 
+# 原版
 # theme_color:
 #   enable: true
 #   main: "#49B1F5"
@@ -523,6 +524,25 @@ site_verification:
 #   scrollbar_color: "#49b1f5"
 #   meta_theme_color_light: "ffffff"
 #   meta_theme_color_dark: "#0d0d0d"
+
+# 自訂配置
+# theme_color:
+#   enable: true
+#   main: "#c9b799"
+#   paginator: "#00E5FF"
+#   button_hover: "#CCFF00" # 懸停對比色：螢光黃綠
+#   text_selection: "#00BFFF" # 深天藍
+#   link_color: "#93A8C7" # 淺灰藍
+#   meta_color: "#708090" # 石板灰
+#   hr_color: "#1A324A" # 深藏青
+#   code_foreground: "#FFFFFF" # 白色
+#   code_background: "rgba(2, 2, 10, 0.8)" # 極深藍黑的半透明背景
+#   toc_color: "#00E5FF"
+#   blockquote_padding_color: "#00E5FF"
+#   blockquote_background_color: "rgba(0, 0, 0, 0.3)" # 半透明深色
+#   scrollbar_color: "#00E5FF"
+#   meta_theme_color_light: "#1A1A1A"
+#   meta_theme_color_dark: "#020205" # 極深黑藍
 
 # The top_img settings of home page
 # default: top img - full screen, site info - middle (默認top_img全屏，site_info在中間)
@@ -617,7 +637,7 @@ display_mode: light
 beautify:
   enable: true # false
   field: post # site/post
-  title-prefix-icon: '\f0c1'
+  title-prefix-icon: '\f120'
   title-prefix-icon-color: '#F47466'
 
 # Global font settings
@@ -889,6 +909,8 @@ css_prefix: true
 inject:
   head:
     - <script src="https://npm.elemecdn.com/akilar-candyassets/js/SAO-Notify.js" async></script>
+    - <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
+    - <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/css/all.min.css">
 
   bottom:
     - <script defer src="https://npm.elemecdn.com/jquery@latest/dist/jquery.min.js"></script>

@@ -17,10 +17,10 @@ beautify()
   h6
     transition: all .2s ease-out
 
-    &:before
+    &:before // markdown title 圖標
       position: absolute
       top: calc(50% - 7px)
-      color: $title-prefix-icon-color
+      color: $title-prefix-icon-color 
       content: $title-prefix-icon
       line-height: 1
       transition: all .2s ease-out
@@ -142,14 +142,14 @@ beautify()
       &__tag-list
         display: inline-block
 
-      &__tags
+      &__tags // 文章底部tag的樣式
         display: inline-block
         margin: 8px 8px 8px 0
         padding: 0 12px
         width: fit-content
-        border: 1px solid $light-blue
+        border: 1px solid #0b5394
         border-radius: 12px
-        color: $light-blue
+        color: #0b5394
         font-size: .85em
         transition: all .2s ease-in-out
 
@@ -177,7 +177,7 @@ beautify()
     position: relative
     margin: 40px 0 10px
     padding: 10px 16px
-    border: 1px solid var(--light-grey)
+    border: 1px solid #444444
     transition: box-shadow .3s ease-in-out
     overflow: hidden
     border-radius: 12px!important

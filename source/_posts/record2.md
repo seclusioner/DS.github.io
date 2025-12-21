@@ -1,5 +1,5 @@
 ---
-title: 59の省思（對你沒看錯)
+title: 59の省思
 date: 2023-01-12 22:32:50
 layout: learn
 tags: [學習]

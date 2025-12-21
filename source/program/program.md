@@ -7,7 +7,7 @@ cover: /images/post/programming.png
 author: D.S.
 ---
 
-{% tip info %}記錄Coding基本會用到的東西，5主要是環境建置{% endtip %}
+{% tip info %}記錄Coding基本會用到的東西，主要是環境建置{% endtip %}
 
 **最後更新：2025/09**
 
