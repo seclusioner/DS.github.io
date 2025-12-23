@@ -1,0 +1,17 @@
+/* KiwiMaru */
+@font-face {
+  font-family: 'KiwiMaru';
+  src: url('/DS.github.io/fonts/KiwiMaru/KiwiMaru-Regular.ttf') format('truetype');
+  font-display: swap;
+}
+
+/* jf-openhuninn */
+@font-face {
+  font-family: 'jf-openhuninn';
+  src: url('/DS.github.io/fonts/jf-openhuninn/jf-openhuninn-2.1.woff2') format('woff2');
+  font-display: swap;
+}
+
+body, .post-body {
+  font-family: 'jf-openhuninn','KiwiMaru', sans-serif !important;
+}
