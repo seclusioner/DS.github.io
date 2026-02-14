@@ -1,0 +1,804 @@
+<!DOCTYPE html><html lang="zh-TW" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>Win10、Ubuntu 24.04 雙系統安裝（多碟、單機、單卡） 記錄 | D.S.</title><meta name="keywords" content="OS,Nvidia驅動安裝"><meta name="author" content="JING"><meta name="copyright" content="JING"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="記錄灌作業系統以及建置環境的實作過程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Win10、Ubuntu 24.04 雙系統安裝（多碟、單機、單卡） 記錄">
+<meta property="og:url" content="https://seclusioner.github.io/DS.github.io/2026/02/01/ubuntu/index.html">
+<meta property="og:site_name" content="D.S.">
+<meta property="og:description" content="記錄灌作業系統以及建置環境的實作過程">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://www.maketecheasier.com/assets/uploads/2018/12/ubuntu-whatis-feat.jpg">
+<meta property="article:published_time" content="2026-01-31T16:46:10.000Z">
+<meta property="article:modified_time" content="2026-02-14T04:49:13.002Z">
+<meta property="article:author" content="JING">
+<meta property="article:tag" content="OS">
+<meta property="article:tag" content="Nvidia驅動安裝">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.maketecheasier.com/assets/uploads/2018/12/ubuntu-whatis-feat.jpg"><link rel="shortcut icon" href="/DS.github.io/images/head/head.jpg"><link rel="canonical" href="https://seclusioner.github.io/DS.github.io/2026/02/01/ubuntu/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="stylesheet" href="/DS.github.io/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/DS.github.io/',
+  algolia: undefined,
+  localSearch: {"path":"/DS.github.io/search.xml","preload":false,"languages":{"hits_empty":"找不到您查詢的內容：${query}"}},
+  translate: {"defaultEncoding":1,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  noticeOutdate: {"limitDay":500,"position":"top","messagePrev":"It has been","messageNext":"days since the last update, the content of the article may be outdated."},
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":200},
+  copy: {
+    success: '複製成功',
+    error: '複製錯誤',
+    noSupport: '瀏覽器不支援'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '剛剛',
+    min: '分鐘前',
+    hour: '小時前',
+    day: '天前',
+    month: '個月前'
+  },
+  copyright: undefined,
+  lightbox: 'mediumZoom',
+  Snackbar: {"chs_to_cht":"你已切換為繁體","cht_to_chs":"你已切換為簡體","day_to_night":"你已切換為深色模式","night_to_day":"你已切換為淺色模式","bgLight":"#49b1f5","bgDark":"#1f1f1f","position":"bottom-left"},
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Win10、Ubuntu 24.04 雙系統安裝（多碟、單機、單卡） 記錄',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2026-02-14 12:49:13'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><script src="https://npm.elemecdn.com/akilar-candyassets/js/SAO-Notify.js" async></script><link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/css/all.min.css"><link rel="stylesheet" href="/DS.github.io/css/custom-font.css"><!-- hexo injector head_end start --><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiperstyle.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-tag-plugins-plus@latest/lib/assets/font-awesome-animation.min.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-tag-plugins-plus@latest/lib/tag_plugins.css" media="defer" onload="this.media='all'"><script src="https://npm.elemecdn.com/hexo-butterfly-tag-plugins-plus@latest/lib/assets/carousel-touch.js"></script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.2.0"><link href="https://cdn.bootcss.com/KaTeX/0.11.1/katex.min.css" rel="stylesheet" /></head><body><div id="loading-box"><div class="SAO-scene"><div class="SAO-wrap"><div class="SAO-wall SAO-wall-right"></div><div class="SAO-wall SAO-wall-left"></div><div class="SAO-wall SAO-wall-top"></div><div class="SAO-wall SAO-wall-bottom"></div><div class="SAO-wall SAO-wall-back"></div></div><div class="SAO-wrap"><div class="SAO-wall SAO-wall-right"></div><div class="SAO-wall SAO-wall-left"></div><div class="SAO-wall SAO-wall-top"></div><div class="SAO-wall SAO-wall-bottom"></div><div class="SAO-wall SAO-wall-back"></div></div></div></div><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/DS.github.io/images/head/head.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/DS.github.io/archives/"><div class="headline">文章</div><div class="length-num">15</div></a><a href="/DS.github.io/tags/"><div class="headline">標籤</div><div class="length-num">10</div></a><a href="/DS.github.io/categories/"><div class="headline">分類</div><div class="length-num">7</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/DS.github.io/"><i class="fa-fw fas fa-home"></i><span> 首頁</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-pen"></i><span> 文章</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/DS.github.io/archives/"><i class="fa-fw fas fa-archive"></i><span> 歸檔</span></a></li><li><a class="site-page child" href="/DS.github.io/learn/"><i class="fa-fw fas fa-book"></i><span> 學習</span></a></li><li><a class="site-page child" href="/DS.github.io/program/"><i class="fa-fw fas fa-computer"></i><span> 程式</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/DS.github.io/tags/"><i class="fa-fw fas fa-tags"></i><span> 標籤</span></a></div><div class="menus_item"><a class="site-page" href="/DS.github.io/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 種類</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 清單</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/DS.github.io/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/DS.github.io/music/"><i class="fa-fw fas fa-music"></i><span> 音樂</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/DS.github.io/link/"><i class="fa-fw fas fa-link"></i><span> 連結</span></a></div><div class="menus_item"><a class="site-page" href="/DS.github.io/about/"><i class="fa-fw fas fa-heart"></i><span> 關於</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://www.maketecheasier.com/assets/uploads/2018/12/ubuntu-whatis-feat.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/DS.github.io/">D.S.</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜尋</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/DS.github.io/"><i class="fa-fw fas fa-home"></i><span> 首頁</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-pen"></i><span> 文章</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/DS.github.io/archives/"><i class="fa-fw fas fa-archive"></i><span> 歸檔</span></a></li><li><a class="site-page child" href="/DS.github.io/learn/"><i class="fa-fw fas fa-book"></i><span> 學習</span></a></li><li><a class="site-page child" href="/DS.github.io/program/"><i class="fa-fw fas fa-computer"></i><span> 程式</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/DS.github.io/tags/"><i class="fa-fw fas fa-tags"></i><span> 標籤</span></a></div><div class="menus_item"><a class="site-page" href="/DS.github.io/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 種類</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 清單</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/DS.github.io/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/DS.github.io/music/"><i class="fa-fw fas fa-music"></i><span> 音樂</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/DS.github.io/link/"><i class="fa-fw fas fa-link"></i><span> 連結</span></a></div><div class="menus_item"><a class="site-page" href="/DS.github.io/about/"><i class="fa-fw fas fa-heart"></i><span> 關於</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Win10、Ubuntu 24.04 雙系統安裝（多碟、單機、單卡） 記錄</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">發表於</span><time class="post-meta-date-created" datetime="2026-01-31T16:46:10.000Z" title="發表於 2026-02-01 00:46:10">2026-02-01</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新於</span><time class="post-meta-date-updated" datetime="2026-02-14T04:49:13.002Z" title="更新於 2026-02-14 12:49:13">2026-02-14</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/DS.github.io/categories/%E6%8A%80%E8%A1%93%E6%96%87%E7%AB%A0/">技術文章</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字數總計:</span><span class="word-count">4.6k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">閱讀時長:</span><span>17分鐘</span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>剛好實驗室有一台主機，可以拿來玩玩，在畢業前盡量使用硬體資源。</p>
+<p>網路上已有許多教學與學習資源，這裡主要記錄自己實作的過程、遇到的問題與筆記，已確認可正常安裝並穩定使用，主要用來熟悉 Linux-based 的 OS 以及 練習一些顯卡和 Docker 的操作，並為小型的 side project 做準備，在撰寫時其實已經完成第一版了，但還有一些可以延伸繼續做的地方，這裡先放連結：</p>
+<div class="tag link"><a class="link-card" title="輕量型顯卡租借系統" target="_blank" rel="noopener" href="https://github.com/seclusioner/Lightweight-GPU-Booking-System"><div class="left"><img src="https://cdn-icons-png.flaticon.com/512/4403/4403137.png"/></div><div class="right"><p class="text">輕量型顯卡租借系統</p><p class="url">https://github.com/seclusioner/Lightweight-GPU-Booking-System</p></div></a></div>
+<link type='text/css' rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" media='all'/>
+<style type="text/css"> 
+.note { 
+  position: relative; 
+  padding: 12px 15px 12px 45px; /* 左側留空間給圖標 */
+  margin: 15px 0; 
+  border-left: 5px solid #eee; 
+  background-color: #f9f9f9; 
+  border-radius: 4px;
+  min-height: 24px; 
+}
+
+/* 關鍵修正：使用 before 並定位在左側 (left) */
+.note::before {
+  font-family: 'FontAwesome';
+  position: absolute;
+  top: 14px;      /* 調整上下位置 */
+  left: 15px;     /* 調整左右位置 */
+  font-size: 1.2rem;
+  opacity: 0.8;
+}
+
+/* --- 1. 成功 (Success) --- */
+.note.success { background-color: #f0f9eb; border-left-color: #67c23a; color: #1c5d19; }
+.note.success::before { content: "\f058"; } /* check-circle */
+
+/* --- 2. 報錯 (Bug) --- */
+.note.bug { background-color: #fff1f0; border-left-color: #f56c6c; color: #a8071a; }
+.note.bug::before { content: "\f188"; } /* bug */
+
+/* --- 3. Docker --- */
+.note.docker { background-color: #e6f7ff; border-left-color: #1890ff; color: #003a8c; }
+.note.docker::before { content: "\f13d"; } /* anchor */
+
+/* --- 4. 提示 (Info) --- */
+.note.info { background-color: #eef7fa; border-left-color: #428bca; color: #31708f; }
+.note.info::before { content: "\f05a"; } /* info-circle */
+
+/* --- 5. 警告 (Warning) --- */
+.note.warning { background-color: #fdf8ea; border-left-color: #f0ad4e; color: #8a6d3b; }
+.note.warning::before { content: "\f071"; } /* exclamation-triangle */
+
+/* --- 6. 重要/危險 (Danger) --- */
+.note.danger { background-color: #fcf1f2; border-left-color: #d9534f; color: #fa0400ff; }
+.note.danger::before { content: "\f06a"; } /* exclamation-circle */
+
+/* --- 7. 其他 (Other/Primary) --- */
+.note.primary { background-color: #f5f0fa; border-left-color: #6f42c1; color: #55318e; }
+.note.primary::before { content: "\f0ad"; } /* wrench */
+
+.note.Other { background-color: #ffdead; border-left-color: #a0522d; color: #5d2f1a; }
+.note.Other::before { content: "\f02b"; } /* tag */
+</style>
+<div class="note warning"> 部分筆記使用 AI 協助與實際測試整理，實際步驟可能會依硬體環境而有所差異</div>
+<!-- ----------------------------------------- -->
+<h1>🖥 測試平台（硬體與系統資訊）</h1>
+<table>
+<thead>
+<tr>
+<th>類別</th>
+<th>規格</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>作業系統</td>
+<td>Ubuntu 24.04 LTS （Kernel 6.14）<br>Windows 10 專業版</td>
+</tr>
+<tr>
+<td>CPU</td>
+<td>AMD Ryzen 5 5600X （6 Cores / 12 Threads）</td>
+</tr>
+<tr>
+<td>記憶體 （RAM）</td>
+<td>46 GiB</td>
+</tr>
+<tr>
+<td>Swap</td>
+<td>8 GiB （目前未使用）</td>
+</tr>
+<tr>
+<td>GPU</td>
+<td>NVIDIA RTX 4090</td>
+</tr>
+<tr>
+<td>GPU VRAM</td>
+<td>24 GB</td>
+</tr>
+<tr>
+<td>NVIDIA Driver</td>
+<td>580.95</td>
+</tr>
+<tr>
+<td>CUDA 支援版本</td>
+<td>最高支援 CUDA 13.0</td>
+</tr>
+</tbody>
+</table>
+<h1>📊 Ubuntu 記憶體狀態（安裝完成後測試）</h1>
+<table>
+<thead>
+<tr>
+<th>項目</th>
+<th>數值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Total Memory</td>
+<td>46 GiB</td>
+</tr>
+<tr>
+<td>Used</td>
+<td>2.6 GiB</td>
+</tr>
+<tr>
+<td>Free</td>
+<td>27 GiB</td>
+</tr>
+<tr>
+<td>Buff/Cache</td>
+<td>17 GiB</td>
+</tr>
+<tr>
+<td>Available</td>
+<td>44 GiB</td>
+</tr>
+</tbody>
+</table>
+<!-- ----------------------------------------- -->
+<h1>BIOS &amp; Windows 10 安裝</h1>
+<h2 id="準備工作">準備工作</h2>
+<p>首先先下載安裝用的 ISO 映像檔：</p>
+<div class='checkbox green checked'><input type="checkbox" checked="checked"/>
+            <p>Ubuntu 24.04 LTS 官方 ISO</p>
+            </div>
+<div class='checkbox green checked'><input type="checkbox" checked="checked"/>
+            <p>Windows 10 安裝 ISO（或既有開機 USB）</p>
+            </div>
+<br>
+<p>接著使用第三方工具將 ISO 製作成可開機 USB，本次使用工具：</p>
+<ul>
+<li><code>Rufus</code> <span class="hidden-anchor" id="referto_[1]"></span><sup class="reference"><a href="#referfrom_[1]">[1]</a></sup><span class="reference-bubble"><span class="reference-item"><span class="reference-literature"></span><span class="reference-title"></span></span></span></li>
+</ul>
+<p>製作時注意項目：</p>
+<ul>
+<li>分割區類型建議選擇：<strong>GPT</strong></li>
+<li>目標系統類型：<strong>UEFI （非 CSM）</strong></li>
+<li>檔案系統：FAT32（Ubuntu 通常自動設定）</li>
+</ul>
+<div class="tip info"><p>如果主機板是較新的（如 ASUS ROG），基本上都是 UEFI 模式</p>
+</div>
+<p>完成後即可取得可開機 USB。</p>
+<div class="note bug">
+    這裡記得盡量主機或顯卡不要插額外的線，我後面就是因為畫面一直灰屏找不到問題，最後才發現我有一條 VGA 的線插在顯卡的插槽，讀不到另一台 DP 轉 HDMI 的線訊號
+</div>
+<h2 id="BIOS-UEFI（ASUS-ROG）">BIOS / UEFI（ASUS ROG）</h2>
+<p>我這台電腦 BIOS 是 ASUS ROG，介面類似下圖（非實際畫面，僅供參考）。</p>
+<p><img src="https://km-ap.asus.com/uploads/PhotoLibrarys/df24d31a-596a-405d-bcda-3f8546a4e1f2/20240409144129339_9.png" alt=""></p>
+<p>將製作好的 USB 插入主機後：</p>
+<ol>
+<li>開機按 <code>Del</code> 或 <code>F2</code> 進入 BIOS（ASUS ROG）</li>
+<li>進入 Boot 選項</li>
+<li>將 USB 設為第一開機順位（或直接使用 Boot Override）</li>
+</ol>
+<details class="folding-tag" red open><summary> ⚠ 建議檢查 </summary>
+              <div class='content'>
+              <div class='checkbox green checked'><input type="checkbox" checked="checked"/>            <p>BIOS 模式是否為 <strong>UEFI</strong></p>            </div><div class='checkbox green checked'><input type="checkbox" checked="checked"/>            <p>Secure Boot 是否開啟（通常 Windows 可正常安裝），若未來要裝 Ubuntu + NVIDIA 驅動，Secure Boot 可能需要關閉（避免驅動簽章問題）</p>            </div>
+              </div>
+            </details>
+<p>接著便可順利進入到 Windows 安裝，照著互動 UI 安裝即可，設定完後（順利進入桌面），可拔掉開機的 USB，並重啟電腦測試是否能正確載入。 <br></p>
+<p>唯一要注意的地方是 <strong>開機硬碟（系統碟）</strong>，盡量先確認硬碟是空的（我實作時是完全空的），若有殘餘檔案，建議可先刪除，透過磁碟管理或 <code>diskmgmt.msc</code>，若權限不足也可透過 <code>cmd</code> 刪除。</p>
+<div class="tip success"><p>成功： 到這裡已完成 Window OS 的安裝</p>
+</div>
+<h2 id="磁碟管理">磁碟管理</h2>
+<p>這一步的目的是<strong>避免 Ubuntu 安裝錯誤或設定錯誤，要先清空將要安裝 Ubuntu 的硬碟資料</strong> <span class="hidden-anchor" id="referto_[2]"></span><sup class="reference"><a href="#referfrom_[2]">[2]</a></sup><span class="reference-bubble"><span class="reference-item"><span class="reference-literature"></span><span class="reference-title"></span></span></span>。</p>
+<p>磁碟管理的 UI 介面可從工具列直接開啟（操作略過），以下直接記錄使用 <code>cmd</code> 透過 <code>diskpart</code> 刪除分割區的流程：</p>
+<div class="note danger">
+    <strong> 注意：操作具有風險，務必確認磁碟與分割區編號，避免誤刪資料 </strong>
+</div>
+<p>開啟 <code>cmd</code>（系統管理員權限）後輸入：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">diskpart                    <span class="comment"># 啟動 Windows 內建磁碟管理工具 DiskPart，進入後提示符為 DISKPART&gt;</span></span><br><span class="line">list disk                   <span class="comment"># 列出所有實體磁碟（含數字編號）</span></span><br><span class="line">select disk &lt;number&gt;        <span class="comment"># 選擇要操作的磁碟，務必確認正確</span></span><br><span class="line">list partition              <span class="comment"># 列出該磁碟所有分割區</span></span><br><span class="line">select partition &lt;num&gt;      <span class="comment"># 選擇要刪除的分割區</span></span><br><span class="line">delete partition override   <span class="comment"># 強制刪除分割區（永久刪除資料）</span></span><br></pre></td></tr></table></figure>
+<p>若要整顆磁碟完全清空，也可以使用：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">clean</span><br></pre></td></tr></table></figure>
+<p><code>clean</code> 會移除整顆磁碟的分割表（GPT/MBR），等同於回到未分割狀態。</p>
+<details class="folding-tag" cyan open><summary> Notes </summary>
+              <div class='content'>
+              <ul><li>開機流程大致如下：<ol><li>開機</li><li>主機板載入 UEFI 韌體</li><li>UEFI 讀取 EFI System Partition（ESP）</li><li>執行 bootloader（Windows Boot Manager 或 GRUB）</li><li>由 bootloader 載入作業系統核心</li><li>作業系統啟動</li></ol></li></ul><p>常見名詞：</p><div class='checkbox'><input type="checkbox" />            <p>BIOS / UEFI = 主機板開機韌體（開機時最先執行的程式）</p>            </div><div class='checkbox'><input type="checkbox" />            <p>MBR / GPT = 磁碟分割表格式（磁碟如何被切割與管理）</p>            </div><div class='checkbox'><input type="checkbox" />            <p>NTFS / ext4 = 檔案系統（作業系統如何儲存檔案）</p>            </div><div class='checkbox'><input type="checkbox" />            <p>Secure Boot = UEFI 的安全驗證機制（驗證開機程式是否有數位簽章）</p>            </div><br><p>Secure Boot 會檢查 bootloader 與 kernel module 是否有合法簽章。</p><p>可能影響：</p><div class='checkbox minus yellow checked'><input type="checkbox" checked="checked"/>            <p><strong>NVIDIA 驅動安裝</strong></p>            </div><div class='checkbox minus yellow checked'><input type="checkbox" checked="checked"/>            <p>自編 kernel module</p>            </div><div class='checkbox minus yellow checked'><input type="checkbox" checked="checked"/>            <p>某些 Linux 發行版</p>            </div><br><p>實作灌 Ubuntu 時常常進不去桌面（黑畫面），目前判斷是因為顯卡驅動載入失敗，kernel 無法載入 NV 顯卡驅動 → 解法：關閉 Secure Boot（BIOS 不一定有選項，可能需借助套件調整）。</p><div class="tip info"><p>※ Ubuntu 安裝 GRUB 時若遇到無法載入 NVIDIA 驅動或黑畫面，通常就是 Secure Boot 阻擋了 kernel module 的簽章<br>※ 安裝順序建議：先安裝 Windows，再安裝 Ubuntu，由 Ubuntu 自動配置 GRUB</p></div>
+              </div>
+            </details>
+<!-- ----------------------------------------- -->
+<h1>Ubuntu 24.04 LTS 安裝</h1>
+<p>一樣將製作好的 USB 插入主機後：</p>
+<ol>
+<li>開機按 <code>Del</code> 或 <code>F2</code> 進入 BIOS（ASUS ROG）</li>
+<li>進入 Boot 選項</li>
+<li>將 USB 設為第一開機順位（或直接使用 Boot Override）</li>
+</ol>
+<p>此時應會看到前面安裝的 Windows Boot Manager，<br>
+這裡要選擇 <strong>Ubuntu 開機 USB</strong>，而不是 Windows。</p>
+<h2 id="GRUB-選單">GRUB 選單</h2>
+<p>成功進入後會看到 Ubuntu 的開機選單（嚴格來說這還不是硬碟裡的 GRUB，而是 USB 內的啟動選單），選項包括：</p>
+<div class='checkbox green'><input type="checkbox" />
+            <p>Try or Install Ubuntu</p>
+            </div>
+<div class='checkbox green'><input type="checkbox" />
+            <p>Ubuntu (safe graphics)</p>
+            </div>
+<div class='checkbox green'><input type="checkbox" />
+            <p>Advanced options</p>
+            </div>
+<h2 id="Try-or-Install-Ubuntu">Try or Install Ubuntu</h2>
+<p>首先我選「Try or Install Ubuntu」的結果，這個模式會進入 Live USB 環境（暫時系統）：</p>
+<div class='checkbox green checked'><input type="checkbox" checked="checked"/>
+            <p>系統從 USB 執行</p>
+            </div>
+<div class='checkbox green checked'><input type="checkbox" checked="checked"/>
+            <p>尚未安裝到硬碟</p>
+            </div>
+<div class='checkbox green checked'><input type="checkbox" checked="checked"/>
+            <p>可測試硬體是否正常（顯卡 / 網卡 / 音效）</p>
+            </div>
+<br>
+<p>實作時進入桌面後沒有看到完整的安裝 GUI，只看到桌布（疑似顯示或驅動問題），<br>
+這時只能用快捷鍵開啟 Terminal 進行操作。</p>
+<details class="folding-tag" red><summary> ⚠ 若設定完重啟電腦黑屏 </summary>
+              <div class='content'>
+              <p>極可能原因：</p><div class='checkbox minus yellow checked'><input type="checkbox" checked="checked"/>            <p>NVIDIA 顯卡驅動未正確載入</p>            </div><div class='checkbox minus yellow checked'><input type="checkbox" checked="checked"/>            <p>Secure Boot 阻擋 unsigned kernel module，導致其未正確載入 kernel</p>            </div><br><p>解法分兩種：</p><ol><li><p>由於有可能是因為 kernel module 沒有合法簽章，被 Secure Boot 拒絕載入，因此需想辦法重新進入桌面，安裝套件或調整 Secure Boot 設定</p></li><li><p>更換 Ubuntu 版本（我第一次灌 22.04 失敗，後來改 24.04 才成功）</p></li></ol>
+              </div>
+            </details>
+<h2 id="Ubuntu-safe-graphics">Ubuntu (safe graphics)</h2>
+<p>GRUB 中另一個選項是「Ubuntu (safe graphics)」，此模式會使用較保守的顯示設定，避免顯卡驅動初始化問題，且通常可以順利進入安裝 GUI。</p>
+<p>安裝時若詢問：</p>
+<ul>
+<li>是否下載更新</li>
+<li>是否安裝第三方套件（第三方驅動）</li>
+</ul>
+<p>建議打勾（需有網路）。</p>
+<div class="note info">
+    <strong>安裝磁碟部分：</strong> 我這裡因為有多顆硬碟，因此選擇與 Win10 完全獨立的硬碟安裝 Ubuntu
+</div>
+<p>優點：</p>
+<div class='checkbox green checked'><input type="checkbox" checked="checked"/>
+            <p>互不影響</p>
+            </div>
+<div class='checkbox green checked'><input type="checkbox" checked="checked"/>
+            <p>分割區較單純</p>
+            </div>
+<div class='checkbox green checked'><input type="checkbox" checked="checked"/>
+            <p>出錯率較低</p>
+            </div>
+<br>
+<p>若安裝在同一顆硬碟：</p>
+<div class='checkbox minus yellow checked'><input type="checkbox" checked="checked"/>
+            <p>需要共用 EFI 分割區</p>
+            </div>
+<div class='checkbox minus yellow checked'><input type="checkbox" checked="checked"/>
+            <p>手動分割較複雜</p>
+            </div>
+<div class='checkbox minus yellow checked'><input type="checkbox" checked="checked"/>
+            <p>GRUB 問題機率較高</p>
+            </div>
+<br>
+<p>若沒有網路，可使用手機 USB 網路分享，<br>
+否則部分套件（如顯卡驅動、更新）不會自動安裝。</p>
+<p>若順利完成安裝：</p>
+<p>重啟電腦 → 拔掉 USB → 應會看到硬碟內的 GRUB 選單：</p>
+<ul>
+<li>Ubuntu</li>
+<li>Windows Boot Manager</li>
+</ul>
+<p>若直接進 Windows，表示開機順序可能被改回 Windows Boot Manager，可回 BIOS 調整。</p>
+  <details class="folding-tag" cyan open><summary> Notes </summary>
+              <div class='content'>
+              <div class="note bug">    若 <code>NumLock</code> 閃爍：</div><ul><li>通常代表 kernel panic 或 kernel 啟動失敗<br><strong>可能原因</strong>：顯卡驅動問題、分割區錯誤、EFI 設定錯誤<br>→ 解法：使用 safe graphics 進入，或清除磁碟分割後重灌</li></ul><div class="note bug">    若黑屏（完全黑畫面無反應）：</div><ul><li><strong>可能原因</strong>：NVIDIA 驅動未載入、Secure Boot 阻擋 kernel module<br>→ 解法：使用 safe graphics 或暫時關閉 Secure Boot</li></ul><div class="note bug">    若灰屏（與黑屏不同）：</div><ul><li><p>系統其實已載入，但顯示管理器或顯卡初始化異常<br>可按下：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Ctrl + Alt + F3</span><br></pre></td></tr></table></figure><p>進入 <strong>TTY 終端模式</strong>檢查系統狀態。</p><p>也需確認：</p><ul><li>是否接了多條螢幕線</li><li>是否有額外顯示輸出</li><li>是否插著不必要的外接裝置</li></ul><h4 id="Secure-Boot-MOK">Secure Boot &amp; MOK</h4><p>若 BIOS 可直接開關 Secure Boot，直接調整即可。<br>若沒有，Ubuntu 會使用 MOK（Machine Owner Key）機制。</p><p>安裝驅動後重啟可能出現藍色畫面，類似下圖：</p><p><img src="https://era86.github.io/assets/images/posts/mok-management.png" alt=""></p><p>步驟：</p><ul><li>選擇「Enroll MOK」</li><li>輸入安裝時設定的密碼</li><li>重新開機完成註冊</li></ul><h4 id="DKMS（Dynamic-Kernel-Module-Support）">DKMS（Dynamic Kernel Module Support）</h4><p>在 kernel 更新時重新編譯驅動並掛載到新 kernel。<br>常見於 NVIDIA、外接網卡等驅動。<br>若更新 kernel 後顯卡失效，可能與 DKMS 失敗有關。</p></li></ul>
+              </div>
+            </details>
+<div class="tip success"><p>成功： 到這裡應已完成基本的 Ubuntu OS 安裝，並順利載入桌面</p>
+</div>
+<h2 id="NVIDIA-驅動程式檢查">NVIDIA 驅動程式檢查</h2>
+<p>順利進入桌面後，為了能夠正常使用顯卡，需先檢查驅動程式是否已正確安裝。</p>
+<p>1️⃣ 先檢查系統建議的驅動版本：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ubuntu-drivers devices</span><br></pre></td></tr></table></figure>
+<p>系統會列出可用版本，以及「recommended」的版本。</p>
+<p>2️⃣ 自動安裝建議版本：會自動安裝系統建議的 NVIDIA 驅動</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo ubuntu-drivers autoinstall</span><br></pre></td></tr></table></figure>
+<p>3️⃣ 重啟系統：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo reboot</span><br></pre></td></tr></table></figure>
+<p>4️⃣ 檢查是否成功載入驅動：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nvidia-smi</span><br></pre></td></tr></table></figure>
+<p>若成功，會顯示 GPU 型號、Driver Version、CUDA Version 以及顯示卡使用狀態表格；若無法執行，可能原因：</p>
+<div class='checkbox times red checked'><input type="checkbox" checked="checked"/>
+            <p>驅動未成功安裝</p>
+            </div>
+<div class='checkbox times red checked'><input type="checkbox" checked="checked"/>
+            <p>Secure Boot 阻擋 kernel module</p>
+            </div>
+<div class='checkbox times red checked'><input type="checkbox" checked="checked"/>
+            <p>DKMS 編譯失敗</p>
+            </div>
+<div class='checkbox times red checked'><input type="checkbox" checked="checked"/>
+            <p>版本不相容</p>
+            </div>
+<br>
+<p>可檢查：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lsmod | grep nvidia</span><br></pre></td></tr></table></figure>
+<p>若有顯示 nvidia 相關模組，代表 kernel module 已載入。</p>
+<p>也可查看錯誤訊息：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dmesg | grep -i nvidia</span><br></pre></td></tr></table></figure>
+<div class="tip cogs"><p>目前 host <strong>僅安裝 NVIDIA Driver，未安裝 CUDA Toolkit</strong>，因為可能不同的專案版本不同，直接在虛擬環境或是 <code>Docker</code> 容器內安裝即可。</p>
+</div>
+<h2 id="USB-網卡驅動安裝記錄">USB 網卡驅動安裝記錄</h2>
+<p>1️⃣ 查看 USB 裝置：使用 USB 無線網卡後，需確認系統是否正確辨識裝置：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lsusb</span><br></pre></td></tr></table></figure>
+<p>範例輸出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Bus 001 Device 002: ID 2357:011e TP-Link AC600 wireless Realtek RTL8811AU [Archer T2U Nano]</span><br></pre></td></tr></table></figure>
+<p>從輸出可得知晶片型號為：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">RTL8811AU</span><br></pre></td></tr></table></figure>
+<p>2️⃣ 安裝必要套件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">sudo apt update</span><br><span class="line">sudo apt install build-essential dkms git usbutils -y</span><br><span class="line">sudo apt install -y build-essential dkms git linux-headers-$(<span class="built_in">uname</span> -r)</span><br><span class="line"></span><br><span class="line">git <span class="built_in">clone</span> https://github.com/morrownr/8821au-20210708.git</span><br><span class="line"><span class="built_in">cd</span> 8821au-20210708</span><br><span class="line">sudo ./install-driver.sh</span><br></pre></td></tr></table></figure>
+<p>系統會問是否需更改設定檔案，若無特殊需求直接跳過即可。</p>
+<p>有可能會需要重啟電腦：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo reboot</span><br></pre></td></tr></table></figure>
+<p>測試：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ping 8.8.8.8</span><br></pre></td></tr></table></figure>
+<p>實作時沒遇到失敗問題，因此依據此次經驗簡單記錄一下可能原因：</p>
+<div class="note bug">
+    若安裝後無法載入模組
+</div>
+<ul>
+<li>
+<p><strong>可能原因</strong>：</p>
+<ul>
+<li>Secure Boot 阻擋 unsigned kernel module</li>
+<li>DKMS 編譯失敗</li>
+</ul>
+</li>
+<li>
+<p>若 <strong>Secure Boot 開啟</strong>，可能需要：</p>
+<ul>
+<li>關閉 Secure Boot</li>
+<li>或使用 MOK 註冊模組簽章（與前述步驟相同）</li>
+</ul>
+</li>
+</ul>
+<h1>Ubuntu的NV CUDA Toolkit與 Docker 環境建置</h1>
+<div class="note default no-icon flat"><p>單機、多使用者環境：</p>
+<div class='checkbox green checked'><input type="checkbox" checked="checked"/>
+            <p>每位使用者可使用 GPU</p>
+            </div>
+<div class='checkbox green checked'><input type="checkbox" checked="checked"/>
+            <p>各專案環境隔離（避免版本衝突）</p>
+            </div>
+<div class='checkbox green checked'><input type="checkbox" checked="checked"/>
+            <p>管理者可控管資源</p>
+            </div>
+<div class='checkbox green checked'><input type="checkbox" checked="checked"/>
+            <p>Host 保持乾淨穩定</p>
+            </div>
+</div>
+<p>Note:</p>
+<ul>
+<li>不在 Ubuntu Host 安裝完整 CUDA Toolkit</li>
+<li>Host 僅安裝 NVIDIA Driver</li>
+<li>所有 CUDA / cuDNN / PyTorch 版本都在 Container 內</li>
+<li>透過 Docker + NVIDIA Container Toolkit 提供 GPU 支援</li>
+</ul>
+<p>優點：</p>
+<ul>
+<li>不同專案可使用不同 CUDA 版本</li>
+<li>避免污染 Host 環境</li>
+<li>版本升級風險較低</li>
+<li>容器可快速重建</li>
+</ul>
+<h1>基本指令</h1>
+<ol>
+<li>系統資訊：</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">lsb_release -a</span><br><span class="line"><span class="built_in">uname</span> -a</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>CPU / RAM</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">lscpu</span><br><span class="line">free -h</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>GPU</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">nvidia-smi</span><br><span class="line">nvidia-smi -L</span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>磁碟</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">df</span> -h</span><br></pre></td></tr></table></figure>
+<h1>建環境指令</h1>
+<div class="note docker">
+  <strong>安裝 Docker</strong>
+</div>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install -y docker.io</span><br><span class="line">sudo systemctl <span class="built_in">enable</span> --now docker</span><br></pre></td></tr></table></figure>
+<div class="note docker">
+  <strong>安裝 NVIDIA Container Toolkit</strong>
+</div>
+<p>功能：讓 Docker 容器能「看見」實體顯卡的橋樑</p>
+<ul>
+<li>顯卡驅動直接與 Linux Kernel 溝通</li>
+<li>Docker Container 共用 Host Kernel</li>
+<li>容器內的 CUDA 需呼叫 Host 上的驅動 .so 檔案</li>
+<li>NVIDIA Container Toolkit 負責在容器啟動時掛載這些檔案</li>
+</ul>
+<div class="note icon-padding disabled"><i class="note-icon fa-solid fa-pen"></i><p>顯卡驅動是直接與 Linux Kernel（內核）溝通的，Docker 容器是共用主機內核的，所以驅動必須裝在主機上，容器內的 CUDA 需要呼叫主機上的 .so 驅動檔案。NVIDIA Container Toolkit 就像是一個「搬運工」，在 Container 啟動的一瞬間，把主機的驅動檔案對應進去</p>
+</div>
+<h2 id="Step-1-：設定-NVIDIA-套件來源">Step 1.：設定 NVIDIA 套件來源</h2>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 建立存放金鑰的資料夾</span></span><br><span class="line">sudo <span class="built_in">mkdir</span> -p /usr/share/keyrings</span><br><span class="line"></span><br><span class="line"><span class="comment"># 下載 GPG 金鑰並轉換格式（符合 Ubuntu 24.04 規範）</span></span><br><span class="line">curl -fsSL https://nvidia.github.io/libnvidia-container/gpgkey | sudo gpg --dearmor -o /usr/share/keyrings/nvidia-container-toolkit-keyring.gpg</span><br><span class="line"></span><br><span class="line"><span class="comment"># 加入 NVIDIA 儲存庫清單</span></span><br><span class="line">curl -s -L https://nvidia.github.io/libnvidia-container/stable/deb/nvidia-container-toolkit.list | \</span><br><span class="line">  sed <span class="string">&#x27;s#deb https://#deb [signed-by=/usr/share/keyrings/nvidia-container-toolkit-keyring.gpg] https://#g&#x27;</span> | \</span><br><span class="line">  sudo <span class="built_in">tee</span> /etc/apt/sources.list.d/nvidia-container-toolkit.list</span><br><span class="line"></span><br><span class="line">sudo apt-get update</span><br></pre></td></tr></table></figure>
+<h2 id="Step-2-：設定-NVIDIA-套件金鑰與儲存庫-（讓-Docker-存取-GPU）">Step 2.：設定 NVIDIA 套件金鑰與儲存庫 （讓 Docker 存取 GPU）</h2>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install -y nvidia-container-toolkit</span><br></pre></td></tr></table></figure>
+<h2 id="Step-3-：設定-Docker-運行環境並重啟">Step 3.：設定 Docker 運行環境並重啟</h2>
+<div class="note icon-padding disabled"><i class="note-icon fa-solid fa-pen"></i><p>此步驟會<strong>自動修改 <code>/etc/docker/daemon.json</code></strong>，告訴 Docker 啟動時要載入 NVIDIA 的 Runtime</p>
+</div>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 自動設定並重啟 Docker</span></span><br><span class="line">sudo nvidia-ctk runtime configure --runtime=docker</span><br><span class="line">sudo systemctl restart docker</span><br></pre></td></tr></table></figure>
+<p>這會自動修改：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/etc/docker/daemon.json</span><br></pre></td></tr></table></figure>
+<h2 id="Step-4-：驗證環境隔離測試：">Step 4.：驗證環境隔離測試：</h2>
+<p>即使主機（Host）沒有安裝任何版本的 CUDA Toolkit，依然可透過不同的 Container 讓不同的 User 使用完全不同的 CUDA 版本</p>
+<div class='checkbox'><input type="checkbox" />
+            <p>測試 A：模擬 User 1 啟動一個 CUDA 11.8 的環境（可選）</p>
+            </div>
+<br>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run --<span class="built_in">rm</span> -it --gpus all nvidia/cuda:11.8.0-base-ubuntu22.04 nvidia-smi</span><br></pre></td></tr></table></figure>
+<div class='checkbox'><input type="checkbox" />
+            <p>測試 B：模擬 User 2 啟動一個 CUDA 12.1 的環境 （可選）</p>
+            </div>
+<br>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run --<span class="built_in">rm</span> -it --gpus all nvidia/cuda:12.1.0-base-ubuntu22.04 nvidia-smi</span><br></pre></td></tr></table></figure>
+<p>若成功，代表：</p>
+<div class='checkbox green checked'><input type="checkbox" checked="checked"/>
+            <p>Host Driver 正常</p>
+            </div>
+<div class='checkbox green checked'><input type="checkbox" checked="checked"/>
+            <p>Docker 可存取 GPU</p>
+            </div>
+<div class='checkbox green checked'><input type="checkbox" checked="checked"/>
+            <p>可同時支援不同 CUDA 版本 -&gt; Driver 版本需 ≥ Container CUDA 版本</p>
+            </div>
+<br>
+<p>確認安裝無誤 （已驗證實作）：</p>
+<ol>
+<li>檢查工具包是否在系統路徑中</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nvidia-ctk --version</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>檢查 Docker 設定檔是否正確寫入</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span> /etc/docker/daemon.json</span><br></pre></td></tr></table></figure>
+<p>輸出內容類似：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;runtimes&quot;</span>: &#123;</span><br><span class="line">    <span class="string">&quot;nvidia&quot;</span>: &#123;</span><br><span class="line">      <span class="string">&quot;args&quot;</span>: [],</span><br><span class="line">      <span class="string">&quot;path&quot;</span>: <span class="string">&quot;nvidia-container-runtime&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>從 Docker 內部呼叫外部顯卡</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo docker run --<span class="built_in">rm</span> --gpus all nvidia/cuda:12.4.1-base-ubuntu22.04 nvidia-smi</span><br></pre></td></tr></table></figure>
+<p>若成功會輸出表格</p>
+<p>實作結果：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">aivc@aivc602-2:~$ docker --version</span><br><span class="line">Docker version 28.2.2, build 28.2.2-0ubuntu1~24.04.1</span><br><span class="line">aivc@aivc602-2:~$ sudo systemctl <span class="built_in">enable</span> --now docker</span><br></pre></td></tr></table></figure>
+<div class="note icon-padding disabled"><i class="note-icon fa-solid fa-pen"></i><p>安裝這些對於系統影響非常小，<code>NVIDIA Container Toolkit</code> 本質上只是一個插件和一些函式庫，它不包含顯卡驅動程序，也不會修改原系統的驅動，主要功能只是在 <strong>Docker 啟動 Container 時，負責把 Host 的驅動（.so 檔案）掛載（mount）進 Container</strong></p>
+<p>移除指令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt purge nvidia-container-toolkit </span><br></pre></td></tr></table></figure>
+<p>參考來源：<a target="_blank" rel="noopener" href="https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html">NVIDIA Container Toolkit Installation Guide</a></p>
+</div>
+<h2 id="測試-Docker-容器">測試 Docker 容器</h2>
+<p>佔用顯存的 Python 程式：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"><span class="comment"># 檢查 CUDA 是否可用</span></span><br><span class="line"><span class="keyword">if</span> torch.cuda.is_available():</span><br><span class="line">    device = torch.device(<span class="string">&quot;cuda&quot;</span>)</span><br><span class="line">    <span class="comment"># 建立一個佔用約 4GB 顯存的張量 （float32 每單位 4 bytes）</span></span><br><span class="line">    x = torch.randn(<span class="number">1024</span>, <span class="number">1024</span>, <span class="number">1024</span>, device=device)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;成功！已在 <span class="subst">&#123;torch.cuda.get_device_name(<span class="number">0</span>)&#125;</span> 上分配約 4GB 記憶體&quot;</span>)</span><br><span class="line">    time.sleep(<span class="number">30</span>) <span class="comment"># 可透過 nvidia-smi 來確認</span></span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;找不到 CUDA！&quot;</span>)</span><br></pre></td></tr></table></figure>
+<p>Docker 運行指令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo docker run --<span class="built_in">rm</span> -it --gpus all \</span><br><span class="line">  -v $(<span class="built_in">pwd</span>):/app -w /app \</span><br><span class="line">  pytorch/pytorch:2.4.0-cuda12.4-cudnn9-runtime \</span><br><span class="line">  python3 test_gpu.py</span><br></pre></td></tr></table></figure>
+<p>（可選）安裝 NVIDIA 官方提供的 Python 監控庫 <a target="_blank" rel="noopener" href="https://docs.nvidia.com/deploy/nvml-api/index.html">NVML</a>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install nvidia-ml-py</span><br></pre></td></tr></table></figure>
+<p>NVIDIA Driver 與 CUDA 版本對照表：<a target="_blank" rel="noopener" href="https://docs.nvidia.com/cuda/cuda-toolkit-release-notes/index.html">NVIDIA CUDA Release</a><br>
+PyTorch 官方對照 <a target="_blank" rel="noopener" href="https://hub.docker.com/r/pytorch/pytorch/tags">Pytorch Docker hub</a></p>
+<h2 id="安裝虛擬環境：">安裝虛擬環境：</h2>
+<h2 id="Python-虛擬環境工具比較">Python 虛擬環境工具比較</h2>
+<table>
+<thead>
+<tr>
+<th>工具</th>
+<th>運作層級</th>
+<th>核心用途</th>
+<th>優點</th>
+<th>缺點</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>venv</td>
+<td>套件層</td>
+<td>隔離不同專案的 Python 套件</td>
+<td>內建、輕量</td>
+<td>無法切換 Python 版本</td>
+</tr>
+<tr>
+<td>pyenv</td>
+<td>版本層</td>
+<td>管理多個 Python 版本</td>
+<td>可共存多版本</td>
+<td>通常需搭配 venv</td>
+</tr>
+<tr>
+<td>Conda</td>
+<td>系統層</td>
+<td>管理跨語言依賴與 CUDA</td>
+<td>相依性管理強</td>
+<td>體積大、較重</td>
+</tr>
+</tbody>
+</table>
+<h2 id="venv">venv</h2>
+<p>下載套件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt update</span><br><span class="line">sudo apt install python3-venv python3-full -y</span><br></pre></td></tr></table></figure>
+<p>建立虛擬環境（可自行命名）：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python3 -m venv venv</span><br></pre></td></tr></table></figure>
+<p>啟用虛擬環境：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span> venv/bin/activate</span><br></pre></td></tr></table></figure>
+<p>離開虛擬環境：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">deactivate</span><br></pre></td></tr></table></figure>
+<p>venv 只能隔離「套件」，無法切換 Python 版本。</p>
+<p>若需要：</p>
+<ul>
+<li>不同專案使用不同 Python 版本（例如 3.10 / 3.11 / 3.12）</li>
+<li>測試舊版本相容性</li>
+<li>避免使用系統內建 Python</li>
+</ul>
+<p>則可搭配 pyenv 使用（但以下尚未實作驗證）</p>
+<h2 id="pyenv">pyenv</h2>
+<ul>
+<li>安裝相依套件：</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo apt update</span><br><span class="line">sudo apt install -y make build-essential libssl-dev zlib1g-dev \</span><br><span class="line">libbz2-dev libreadline-dev libsqlite3-dev curl llvm \</span><br><span class="line">libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev</span><br></pre></td></tr></table></figure>
+<ul>
+<li>安裝pyenv：</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl https://pyenv.run | bash</span><br></pre></td></tr></table></figure>
+<ul>
+<li>設定環境變數：</li>
+</ul>
+<p>將以下內容加入 <code>~/.bashrc</code>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> PATH=<span class="string">&quot;<span class="variable">$HOME</span>/.pyenv/bin:<span class="variable">$PATH</span>&quot;</span></span><br><span class="line"><span class="built_in">eval</span> <span class="string">&quot;<span class="subst">$(pyenv init --path)</span>&quot;</span></span><br><span class="line"><span class="built_in">eval</span> <span class="string">&quot;<span class="subst">$(pyenv init -)</span>&quot;</span></span><br></pre></td></tr></table></figure>
+<p>重新載入：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span> ~/.bashrc</span><br></pre></td></tr></table></figure>
+<p>確認安裝成功：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pyenv --version</span><br></pre></td></tr></table></figure>
+<ul>
+<li>基本使用方式：</li>
+</ul>
+<p>查看可安裝版本：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pyenv install --list</span><br></pre></td></tr></table></figure>
+<p>安裝指定版本：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pyenv install 3.10.14</span><br></pre></td></tr></table></figure>
+<p>刪除 Python 版本：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pyenv uninstall 3.10.14</span><br></pre></td></tr></table></figure>
+<p>指定 Python 版本：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pyenv <span class="built_in">local</span> 3.10.14</span><br></pre></td></tr></table></figure>
+<p>此指令會在指定目錄（當前目錄）下建立 python-version的檔案去修改環境的 PATH，讓 python 指向 pyenv 安裝的版本，可用以下指令驗證：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">which</span> python</span><br><span class="line">python --version</span><br></pre></td></tr></table></figure>
+<h2 id="專案虛擬環境建置">專案虛擬環境建置</h2>
+<div class="tip key"><p>pyenv → 控制 Python 版本<br>
+venv → 隔離該版本的套件</p>
+</div>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> my_project</span><br><span class="line">pyenv <span class="built_in">local</span> 3.10.14</span><br><span class="line">python -m venv venv</span><br><span class="line"><span class="built_in">source</span> venv/bin/activate</span><br></pre></td></tr></table></figure>
+<div class="note icon-padding disabled"><i class="note-icon fa-solid fa-pen"></i><p>Conda 每個環境通常會複製大量依賴，磁碟空間消耗較高。</p>
+</div>
+<h1>Reference</h1>
+<div class="reference-source"><span class="hidden-anchor" id="referfrom_[1]"></span><a class="reference-anchor" href="#referto_[1]">[1]<div class="reference-anchor-up fa-solid fa-angles-up"></div></a><a class="reference-link" target="_blank" rel="noopener" href="https://vocus.cc/article/677a9839fd8978000160556b"> Ubuntu 22.04 LTS安裝教學：步驟詳解及圖文指南</a></div>
+<div class="reference-source"><span class="hidden-anchor" id="referfrom_[2]"></span><a class="reference-anchor" href="#referto_[2]">[2]<div class="reference-anchor-up fa-solid fa-angles-up"></div></a><a class="reference-link" target="_blank" rel="noopener" href="https://ivonblog.com/posts/windows11-ubuntu2204-dual-boot/">【圖文教學】Windows 11安裝Ubuntu LTS，單碟雙系統</a></div></article><div class="business-center"><div class="business-card"><div class="business-flip"><div class="business-front"><div class="business-strip-bottom"></div><div class="business-strip-top"></div><img class="business-logo" width="80" height="80" src="https://i.pinimg.com/564x/f6/64/db/f664db9561c42735da73c9826df5fe3b.jpg" alt="cardcode"><div class="business-Invitation">Invitation</div><div class="business-chip"><div class="business-chip-line"></div><div class="business-chip-line"></div><div class="business-chip-line"></div><div class="business-chip-line"></div><div class="business-chip-main"></div></div><svg class="business-wave" viewBox="0 3.71 26.959 38.787" width="26.959" height="38.787" fill="white"><path d="M19.709 3.719c.266.043.5.187.656.406 4.125 5.207 6.594 11.781 6.594 18.938 0 7.156-2.469 13.73-6.594 18.937-.195.336-.57.531-.957.492a.9946.9946 0 0 1-.851-.66c-.129-.367-.035-.777.246-1.051 3.855-4.867 6.156-11.023 6.156-17.718 0-6.696-2.301-12.852-6.156-17.719-.262-.317-.301-.762-.102-1.121.204-.36.602-.559 1.008-.504z"></path><path d="M13.74 7.563c.231.039.442.164.594.343 3.508 4.059 5.625 9.371 5.625 15.157 0 5.785-2.113 11.097-5.625 15.156-.363.422-1 .472-1.422.109-.422-.363-.472-1-.109-1.422 3.211-3.711 5.156-8.551 5.156-13.843 0-5.293-1.949-10.133-5.156-13.844-.27-.309-.324-.75-.141-1.114.188-.367.578-.582.985-.542h.093z"></path><path d="M7.584 11.438c.227.031.438.144.594.312 2.953 2.863 4.781 6.875 4.781 11.313 0 4.433-1.828 8.449-4.781 11.312-.398.387-1.035.383-1.422-.016-.387-.398-.383-1.035.016-1.421 2.582-2.504 4.187-5.993 4.187-9.875 0-3.883-1.605-7.372-4.187-9.875-.321-.282-.426-.739-.266-1.133.164-.395.559-.641.984-.617h.094zM1.178 15.531c.121.02.238.063.344.125 2.633 1.414 4.437 4.215 4.437 7.407 0 3.195-1.797 5.996-4.437 7.406-.492.258-1.102.07-1.36-.422-.257-.492-.07-1.102.422-1.359 2.012-1.075 3.375-3.176 3.375-5.625 0-2.446-1.371-4.551-3.375-5.625-.441-.204-.676-.692-.551-1.165.122-.468.567-.785 1.051-.742h.094z"></path></svg><div class="business-card-number"><div class="business-section">D.S.</div><div class="business-section">JING</div></div><div class="business-end"><span class="business-end-text">created:</span><span class="business-end-date">20/07/2022</span></div><div class="business-card-holder">Welcome to D.S.</div><div class="business-master"><div class="business-circle business-master-red"></div><div class="business-circle business-master-yellow">   </div></div></div><div class="business-back"><div class="business-strip-black"></div><div class="business-ccv"><label>Sitelink</label><div><a href="https://seclusioner.github.io">Dream Seclusioner</a></div></div><div class="business-terms"><p>This is the author card.</p><p>Welcome to D.S., wish you a nice day .</p></div></div></div></div></div><div class="post-copyright"><div class="post-copyright__title"><span class="post-copyright-info"><h>Win10、Ubuntu 24.04 雙系統安裝（多碟、單機、單卡） 記錄</h></span></div><div class="post-copyright__type"><span class="post-copyright-info"><a href="https://seclusioner.github.io/DS.github.io/2026/02/01/ubuntu/">https://seclusioner.github.io/DS.github.io/2026/02/01/ubuntu/</a></span></div><div class="post-copyright-m"><div class="post-copyright-m-info"><div class="post-copyright-a"><h>作者</h><div class="post-copyright-cc-info"><h>JING</h></div></div><div class="post-copyright-c"><h>发布于</h><div class="post-copyright-cc-info"><h>2026-02-01</h></div></div><div class="post-copyright-u"><h>更新于</h><div class="post-copyright-cc-info"><h>2026-02-14</h></div></div><div class="post-copyright-c"><h>许可协议</h><div class="post-copyright-cc-info"><a class="icon" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a><a rel="noopener" target="_blank" title="CC BY-NC-SA 4.0" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a></div></div></div></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/DS.github.io/tags/OS/">OS</a><a class="post-meta__tags" href="/DS.github.io/tags/Nvidia%E9%A9%85%E5%8B%95%E5%AE%89%E8%A3%9D/">Nvidia驅動安裝</a></div><div class="post_share"></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/DS.github.io/2025/06/13/Hello-Docker/"><img class="next-cover" src="https://www.capdio.com/wp-content/uploads/2024/07/Docker-Logo.png" onerror="onerror=null;src='/DS.github.io/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Hello Docker</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/DS.github.io/images/head/head.jpg" onerror="this.onerror=null;this.src='/DS.github.io/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">JING</div><div class="author-info__description">理工宅男，但不臭</div></div><div class="card-info-data site-data is-center"><a href="/DS.github.io/archives/"><div class="headline">文章</div><div class="length-num">15</div></a><a href="/DS.github.io/tags/"><div class="headline">標籤</div><div class="length-num">10</div></a><a href="/DS.github.io/categories/"><div class="headline">分類</div><div class="length-num">7</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/seclusioner"><i class="fab fa-github"></i><span>D.S.のGithub</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://seclusioner.github.io/" target="_blank" title="Github-TEST"><i class="fab fa-github"></i></a><a class="social-icon" href="https://www.youtube.com/channel/UChlTC056Y_DJNUlGJdcd4sQ" target="_blank" title="Youtube"><i class="fab fa-youtube"></i></a><a class="social-icon" href="https://www.facebook.com/seclusioner" target="_blank" title="Facebook"><i class="fab fa-facebook"></i></a><a class="social-icon" href="mailto:fileuseingbyds@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="https://www.instagram.com/d.seclusioner/" target="_blank" title="Instagram"><i class="fa-brands fa-instagram-square"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">歡迎來到我的網頁！ <a class="button button--frame" target="_blank" rel="noopener" href="https://github.com/seclusioner/DS.github.io"> <i class="fab fa-github"></i> <span>Source</span> </a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目錄</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">1.</span> <span class="toc-text">🖥 測試平台（硬體與系統資訊）</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">2.</span> <span class="toc-text">📊 Ubuntu 記憶體狀態（安裝完成後測試）</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">3.</span> <span class="toc-text">BIOS &amp; Windows 10 安裝</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%BA%96%E5%82%99%E5%B7%A5%E4%BD%9C"><span class="toc-number">3.1.</span> <span class="toc-text">準備工作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#BIOS-UEFI%EF%BC%88ASUS-ROG%EF%BC%89"><span class="toc-number">3.2.</span> <span class="toc-text">BIOS &#x2F; UEFI（ASUS ROG）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A3%81%E7%A2%9F%E7%AE%A1%E7%90%86"><span class="toc-number">3.3.</span> <span class="toc-text">磁碟管理</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">4.</span> <span class="toc-text">Ubuntu 24.04 LTS 安裝</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#GRUB-%E9%81%B8%E5%96%AE"><span class="toc-number">4.1.</span> <span class="toc-text">GRUB 選單</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Try-or-Install-Ubuntu"><span class="toc-number">4.2.</span> <span class="toc-text">Try or Install Ubuntu</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Ubuntu-safe-graphics"><span class="toc-number">4.3.</span> <span class="toc-text">Ubuntu (safe graphics)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Secure-Boot-MOK"><span class="toc-number">4.3.0.1.</span> <span class="toc-text">Secure Boot &amp; MOK</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#DKMS%EF%BC%88Dynamic-Kernel-Module-Support%EF%BC%89"><span class="toc-number">4.3.0.2.</span> <span class="toc-text">DKMS（Dynamic Kernel Module Support）</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#NVIDIA-%E9%A9%85%E5%8B%95%E7%A8%8B%E5%BC%8F%E6%AA%A2%E6%9F%A5"><span class="toc-number">4.4.</span> <span class="toc-text">NVIDIA 驅動程式檢查</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#USB-%E7%B6%B2%E5%8D%A1%E9%A9%85%E5%8B%95%E5%AE%89%E8%A3%9D%E8%A8%98%E9%8C%84"><span class="toc-number">4.5.</span> <span class="toc-text">USB 網卡驅動安裝記錄</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">5.</span> <span class="toc-text">Ubuntu的NV CUDA Toolkit與 Docker 環境建置</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">6.</span> <span class="toc-text">基本指令</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">7.</span> <span class="toc-text">建環境指令</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Step-1-%EF%BC%9A%E8%A8%AD%E5%AE%9A-NVIDIA-%E5%A5%97%E4%BB%B6%E4%BE%86%E6%BA%90"><span class="toc-number">7.1.</span> <span class="toc-text">Step 1.：設定 NVIDIA 套件來源</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Step-2-%EF%BC%9A%E8%A8%AD%E5%AE%9A-NVIDIA-%E5%A5%97%E4%BB%B6%E9%87%91%E9%91%B0%E8%88%87%E5%84%B2%E5%AD%98%E5%BA%AB-%EF%BC%88%E8%AE%93-Docker-%E5%AD%98%E5%8F%96-GPU%EF%BC%89"><span class="toc-number">7.2.</span> <span class="toc-text">Step 2.：設定 NVIDIA 套件金鑰與儲存庫 （讓 Docker 存取 GPU）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Step-3-%EF%BC%9A%E8%A8%AD%E5%AE%9A-Docker-%E9%81%8B%E8%A1%8C%E7%92%B0%E5%A2%83%E4%B8%A6%E9%87%8D%E5%95%9F"><span class="toc-number">7.3.</span> <span class="toc-text">Step 3.：設定 Docker 運行環境並重啟</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Step-4-%EF%BC%9A%E9%A9%97%E8%AD%89%E7%92%B0%E5%A2%83%E9%9A%94%E9%9B%A2%E6%B8%AC%E8%A9%A6%EF%BC%9A"><span class="toc-number">7.4.</span> <span class="toc-text">Step 4.：驗證環境隔離測試：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B8%AC%E8%A9%A6-Docker-%E5%AE%B9%E5%99%A8"><span class="toc-number">7.5.</span> <span class="toc-text">測試 Docker 容器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%9D%E8%99%9B%E6%93%AC%E7%92%B0%E5%A2%83%EF%BC%9A"><span class="toc-number">7.6.</span> <span class="toc-text">安裝虛擬環境：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Python-%E8%99%9B%E6%93%AC%E7%92%B0%E5%A2%83%E5%B7%A5%E5%85%B7%E6%AF%94%E8%BC%83"><span class="toc-number">7.7.</span> <span class="toc-text">Python 虛擬環境工具比較</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#venv"><span class="toc-number">7.8.</span> <span class="toc-text">venv</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#pyenv"><span class="toc-number">7.9.</span> <span class="toc-text">pyenv</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%88%E6%A1%88%E8%99%9B%E6%93%AC%E7%92%B0%E5%A2%83%E5%BB%BA%E7%BD%AE"><span class="toc-number">7.10.</span> <span class="toc-text">專案虛擬環境建置</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">8.</span> <span class="toc-text">Reference</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/DS.github.io/2026/02/01/ubuntu/" title="Win10、Ubuntu 24.04 雙系統安裝（多碟、單機、單卡） 記錄"><img src="https://www.maketecheasier.com/assets/uploads/2018/12/ubuntu-whatis-feat.jpg" onerror="this.onerror=null;this.src='/DS.github.io/img/404.jpg'" alt="Win10、Ubuntu 24.04 雙系統安裝（多碟、單機、單卡） 記錄"/></a><div class="content"><a class="title" href="/DS.github.io/2026/02/01/ubuntu/" title="Win10、Ubuntu 24.04 雙系統安裝（多碟、單機、單卡） 記錄">Win10、Ubuntu 24.04 雙系統安裝（多碟、單機、單卡） 記錄</a><time datetime="2026-01-31T16:46:10.000Z" title="發表於 2026-02-01 00:46:10">2026-02-01</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/DS.github.io/2025/06/13/Hello-Docker/" title="Hello Docker"><img src="https://www.capdio.com/wp-content/uploads/2024/07/Docker-Logo.png" onerror="this.onerror=null;this.src='/DS.github.io/img/404.jpg'" alt="Hello Docker"/></a><div class="content"><a class="title" href="/DS.github.io/2025/06/13/Hello-Docker/" title="Hello Docker">Hello Docker</a><time datetime="2025-06-13T14:10:22.000Z" title="發表於 2025-06-13 22:10:22">2025-06-13</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/DS.github.io/2023/11/14/hexo-butterfly/" title="hexo theme"><img src="https://pic1.zhimg.com/v2-41e1b825c51055f39c22b95777bc620b_1440w.jpg?source=172ae18b" onerror="this.onerror=null;this.src='/DS.github.io/img/404.jpg'" alt="hexo theme"/></a><div class="content"><a class="title" href="/DS.github.io/2023/11/14/hexo-butterfly/" title="hexo theme">hexo theme</a><time datetime="2023-11-14T05:45:40.000Z" title="發表於 2023-11-14 13:45:40">2023-11-14</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/DS.github.io/2023/11/13/record5/" title="最後的理由 X 選擇"><img src="https://i.imgur.com/He6kHyG.png" onerror="this.onerror=null;this.src='/DS.github.io/img/404.jpg'" alt="最後的理由 X 選擇"/></a><div class="content"><a class="title" href="/DS.github.io/2023/11/13/record5/" title="最後的理由 X 選擇">最後的理由 X 選擇</a><time datetime="2023-11-13T11:56:48.000Z" title="發表於 2023-11-13 19:56:48">2023-11-13</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/DS.github.io/2023/05/15/plugins/" title="Hexo 外掛標籤測試"><img src="https://images7.alphacoders.com/695/695932.jpg" onerror="this.onerror=null;this.src='/DS.github.io/img/404.jpg'" alt="Hexo 外掛標籤測試"/></a><div class="content"><a class="title" href="/DS.github.io/2023/05/15/plugins/" title="Hexo 外掛標籤測試">Hexo 外掛標籤測試</a><time datetime="2023-05-15T06:04:06.000Z" title="發表於 2023-05-15 14:04:06">2023-05-15</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('https://www.maketecheasier.com/assets/uploads/2018/12/ubuntu-whatis-feat.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2022 - 2026 By JING</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主題 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Other <a target="_blank" href="https://python-test1-ds.herokuapp.com/"> website </a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="閱讀模式"><i class="fas fa-book-open"></i></button><button id="translateLink" type="button" title="簡繁轉換">繁</button><button id="darkmode" type="button" title="淺色和深色模式轉換"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="單欄和雙欄切換"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="設定"><i class="fas fa-cog fa-spin"></i></button><button id="ranklist_show" type="button" title="rightside.SAOSwitch" onclick="panelAudio();SAOSwitch()"><i class="fas fa-mouse"></i></button><button class="close" id="mobile-toc-button" type="button" title="目錄"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到頂部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜尋</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  資料庫載入中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜尋文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/DS.github.io/js/utils.js"></script><script src="/DS.github.io/js/main.js"></script><script src="/DS.github.io/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/medium-zoom/dist/medium-zoom.min.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><script src="/DS.github.io/js/search/local-search.js"></script><div class="pjax-reload"><script async="async">var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';      
+    document.getElementById('loading-box').style.transition = 'opacity 3s';
+    document.getElementById('loading-box').style.opacity = '0';
+    setTimeout(function(){
+      document.getElementById('loading-box').classList.add("loaded")
+    }, 3500)
+
+    //用於判斷是否第一次加載
+    if(sessionStorage.getItem("isReload")){
+       //若顯示已經加載過
+       return true
+    }else{
+      //若為第一次加載
+     sessionStorage.setItem("isReload", true)
+     document.body.insertAdjacentHTML('beforeend',`<div id="SAO-Welcome" style="position: fixed;display: block;background: transparent;top: calc(50% - 250px);z-index: 1000;left: 0;right: 0;margin: auto auto;font-family: 'SAOUI';font-size: 8vw;width: fit-content;height: fit-content;color: rgba(201, 202, 203,0.7);text-decoration: underline 2vw rgba(201, 202, 203,0.7);"> Welcome to D.S. !</div>`)
+     SAONotify('Welcome','歡迎光臨 D.S. 的網頁<br>願你享受愉快的一天')
+     setTimeout(function(){
+       document.getElementById("SAO-Welcome").remove();
+     },3500)
+    }
+
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').style.transition = '';
+    document.getElementById('loading-box').style.opacity = '1';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',()=> {preloader.endLoading()})
+setTimeout(function(){preloader.endLoading();}, 5000);</script></div><div class="js-pjax"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex/dist/contrib/copy-tex.min.js"></script><script>(() => {
+  document.querySelectorAll('#article-container span.katex-display').forEach(item => {
+    btf.wrap(item, 'div', { class: 'katex-wrap'})
+  })
+})()</script><script>(() => {
+  const $mermaidWrap = document.querySelectorAll('#article-container .mermaid-wrap')
+  if ($mermaidWrap.length) {
+    window.runMermaid = () => {
+      window.loadMermaid = true
+      const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+      Array.from($mermaidWrap).forEach((item, index) => {
+        const mermaidSrc = item.firstElementChild
+        const mermaidThemeConfig = '%%{init:{ \'theme\':\'' + theme + '\'}}%%\n'
+        const mermaidID = 'mermaid-' + index
+        const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+        mermaid.mermaidAPI.render(mermaidID, mermaidDefinition, (svgCode) => {
+          mermaidSrc.insertAdjacentHTML('afterend', svgCode)
+        })
+      })
+    }
+
+    const loadMermaid = () => {
+      window.loadMermaid ? runMermaid() : getScript('https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js').then(runMermaid)
+    }
+
+    window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+  }
+})()</script></div><script defer src="https://npm.elemecdn.com/jquery@latest/dist/jquery.min.js"></script><script data-pjax defer src="https://npm.elemecdn.com/tzy-blog/lib/js/theme/chocolate.js"></script><canvas class="fireworks" mobile="true"></canvas><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/fireworks.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = false;
+POWERMODE.mobile = true;
+document.body.addEventListener('input', POWERMODE);
+</script><div id="SAO-back"><div id="SAO-menu"><div id="SAO-menu-content"><div class="utils-list"><div class="utils-list-item"><div class="user-panel" style="top:-170;"><div class="user-panel-name">Help</div><div class="user-panel-img"><img src="/DS.github.io/img/info.png"/></div><div class="user-panel-properties">Anything can I help you ?</div></div><i class="fa fa-question-circle" onclick="panelAudio();UtilsClick()"></i><div class="menu-list" style="top:-83px;"><div class="menu-list-item"><i class="fa fa-user-friends" onclick="clickAudio();setTimeout(function(){SAOclose();linkStart('https://seclusioner.github.io/DS.github.io/')},500);">D.S.</i></div><div class="menu-list-item"><i class="fa fa-folder-open" onclick="panelAudio();MenusClick()">Other</i><div class="menu-child" style="top:-60px;"><div class="menu-list-child"><i class="fa fa-file-invoice" onclick="clickAudio();setTimeout(function(){SAOclose();linkStart('https://seclusioner.github.io/test.github.io/')},500);">TEST</i></div><div class="menu-list-child"><i class="fa fa-file-invoice" onclick="clickAudio();setTimeout(function(){SAOclose();linkStart('https://seclusioner.github.io/')},500);">Entrance</i></div></div></div></div></div><div class="utils-list-item"><div class="user-panel" style="top:null;"><div class="user-panel-name">Link</div><div class="user-panel-img"><img src="https://npm.elemecdn.com/akilar-candyassets/image/info.png"/></div><div class="user-panel-properties">可以看看大大們的 Blog ，<br/> 小弟大多都是參考他們的網頁。</div></div><i class="fa fa-link" onclick="panelAudio();UtilsClick()"></i><div class="menu-list" style="top:-103px;"><div class="menu-list-item"><i class="fa fa-user-friends" onclick="clickAudio();setTimeout(function(){SAOclose();linkStart('https://sao-coding.github.io/')},500);">唯一のBlog</i></div><div class="menu-list-item"><i class="fa fa-user-friends" onclick="clickAudio();setTimeout(function(){SAOclose();linkStart('https://akilar.top/')},500);">Akilarの糖果屋</i></div><div class="menu-list-item"><i class="fa fa-user-friends" onclick="clickAudio();setTimeout(function(){SAOclose();linkStart('https://tzy1997.com/articles/hexo1606/')},500);">Ethan.Tzy</i></div></div></div><div class="utils-list-item"><div class="user-panel" style="top:null;"><div class="user-panel-name">Menu</div><div class="user-panel-img"><img src="https://npm.elemecdn.com/akilar-candyassets/image/info.png"/></div><div class="user-panel-properties">The menu of D.S.</div></div><i class="fa fa-tasks" onclick="panelAudio();UtilsClick()"></i><div class="menu-list" style="top:-163px;"><div class="menu-list-item"><i class="fa fa-home" onclick="clickAudio();setTimeout(function(){SAOclose();linkStart('https://seclusioner.github.io/DS.github.io')},500);">Home</i></div><div class="menu-list-item"><i class="fa fa-folder-open" onclick="panelAudio();MenusClick()">Post</i><div class="menu-child" style="top:-80px;"><div class="menu-list-child"><i class="fa fa-file-invoice" onclick="clickAudio();setTimeout(function(){SAOclose();linkStart('https://seclusioner.github.io/DS.github.io/2023/01/24/start/')},500);">User</i></div><div class="menu-list-child"><i class="fa fa-file-invoice" onclick="clickAudio();setTimeout(function(){SAOclose();linkStart('http://seclusioner.github.io/learn/')},500);">Learning</i></div><div class="menu-list-child"><i class="fa fa-file-invoice" onclick="clickAudio();setTimeout(function(){SAOclose();linkStart('https://israynotarray.com/hexo/20190411/932826160/')},500);">Hexo to GitHub</i></div></div></div><div class="menu-list-item"><i class="fa fa-blog" onclick="clickAudio();setTimeout(function(){SAOclose();linkStart('http://seclusioner.github.io/')},500);">Blog</i></div><div class="menu-list-item"><i class="fa fa-archive" onclick="clickAudio();setTimeout(function(){SAOclose();linkStart('https://seclusioner.github.io/archives/')},500);">Archives</i></div><div class="menu-list-item"><i class="fa fa-folder-open" onclick="clickAudio();setTimeout(function(){SAOclose();linkStart('https://seclusioner.github.io/categories/')},500);">Categoties</i></div><div class="menu-list-item"><i class="fa fa-tags" onclick="clickAudio();setTimeout(function(){SAOclose();linkStart('https://seclusioner.github.io/tags/')},500);">Tags</i></div></div></div><div class="utils-list-item"><div class="user-panel"><div class="user-panel-name">Instructions</div><div class="user-panel-img"><img src="https://npm.elemecdn.com/akilar-candyassets/image/siteicon/favicon.png"/></div><div class="user-panel-properties"><h4>歡迎使用SAO_Utils_Web 2.0</h4><p>點按選項可以持續顯示下級菜單。您可以通過按住<kbd>ctrl</kbd>+<kbd>右鍵</kbd>來恢複使用原生右鍵菜單，更多內容可點擊右側Option按鈕訪問教程或Help按鈕加入糖果屋QQ群。</p><center>©Akilarの糖果屋</center></div></div><i class="fa fa-cog" onclick="panelAudio();UtilsClick()"></i><div class="menu-list" style="top:-103px;"><div class="menu-list-item"><i class="fa fa-tools" onclick="clickAudio();setTimeout(function(){SAOclose();linkStart('https://akilar.top/posts/fd243d7/')},500);">Option</i></div><div class="menu-list-item"><i class="fa fa-question-circle" onclick="clickAudio();setTimeout(function(){SAOclose();linkStart('https://jq.qq.com/?_wv=1027&amp;k=a08BZRzs')},500);">Help</i></div><div class="menu-list-item"><i class="fa fa-sign-out-alt" onclick="alertAudio();openLogout()">Logout</i></div></div></div><div class="utils-list-item"><i class="fa fa-power-off" onclick="alertAudio();SAOKeepOff()" title="永久關閉SAO右鍵菜單"></i></div></div></div></div></div><div id="SAO-logout"><div class="logout-title">Alert</div><div class="logout-alert">是否確認退出?</div><div class="logout-button"><span class="logout-confirm"><button class="far fa-circle" type="button" name="confirm" onclick="clickAudio();confirmLogout()"></button></span><span class="logout-cancel"><button class="fa fa-times" type="button" name="cancel" onclick="panelAudio();cancelLogout()"></button></span></div></div><audio id="SAOlauncher" src="/DS.github.io/assets/Launcher.wav"></audio><audio id="SAOClick" src="/DS.github.io/assets/Click.wav"></audio><audio id="SAOPanel" src="/DS.github.io/assets/Panel.wav"></audio><audio id="SAOAlert" src="/DS.github.io/assets/Alert.wav"></audio><script async="async" src="/DS.github.io/js/SAO_Menu.js"></script></div><!-- hexo injector body_end start --><script data-pjax>
+  function butterfly_swiper_injector_config(){
+    var parent_div_git = document.getElementById('recent-posts');
+    var item_html = '<div class="recent-post-item" style="height: auto;width: 100%"><div class="blog-slider swiper-container-fade swiper-container-horizontal" id="swiper_container"><div class="blog-slider__wrp swiper-wrapper" style="transition-duration: 0ms;"><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" href="2022/07/24/learn/" alt=""><img width="48" height="48" src="https://knilt.arcc.albany.edu/images/6/68/Learningheader1.jpg" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2022-07-24</span><a class="blog-slider__title" href="2022/07/24/learn/" alt="">學習</a><div class="blog-slider__text">對教育的看法和理念</div><a class="blog-slider__button" href="2022/07/24/learn/" alt="">详情   </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" href="2023/11/13/record5/" alt=""><img width="48" height="48" src="https://i.imgur.com/He6kHyG.png" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2023-11-13</span><a class="blog-slider__title" href="2023/11/13/record5/" alt="">最後的理由 X 選擇</a><div class="blog-slider__text">大學生涯紀錄</div><a class="blog-slider__button" href="2023/11/13/record5/" alt="">详情   </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" href="2023/01/12/record2/" alt=""><img width="48" height="48" src="https://e0.pxfuel.com/wallpapers/503/445/desktop-wallpaper-books-coffee-miscellanea-miscellaneous-cup-notebook-pen-laptop.jpg" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2023-01-12</span><a class="blog-slider__title" href="2023/01/12/record2/" alt="">59の省思</a><div class="blog-slider__text">抒發系列、記錄</div><a class="blog-slider__button" href="2023/01/12/record2/" alt="">详情   </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" href="2022/11/11/record/" alt=""><img width="48" height="48" src="https://raw.githubusercontent.com/seclusioner/DS.github.io/refs/heads/main/images/post/record.jpg" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2022-11-11</span><a class="blog-slider__title" href="2022/11/11/record/" alt="">雲創盃紀錄</a><div class="blog-slider__text">抒發系列、記錄</div><a class="blog-slider__button" href="2022/11/11/record/" alt="">详情   </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" href="2023/04/08/record4/" alt=""><img width="48" height="48" src="https://i.pinimg.com/564x/d4/7b/20/d47b20aad77ff69e2b25117153c48950.jpg" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2023-04-08</span><a class="blog-slider__title" href="2023/04/08/record4/" alt="">쓸쓸하고 찬란하神-도깨비</a><div class="blog-slider__text">觀劇心得</div><a class="blog-slider__button" href="2023/04/08/record4/" alt="">详情   </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" href="2023/04/07/record3/" alt=""><img width="48" height="48" src="https://tse4.mm.bing.net/th/id/OIP.YSzeCi_5jMs2Yr7gO61IwwHaFA?cb=ucfimgc2&amp;rs=1&amp;pid=ImgDetMain&amp;o=7&amp;rm=3" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2023-04-07</span><a class="blog-slider__title" href="2023/04/07/record3/" alt="">熬夜の藉口</a><div class="blog-slider__text">抒發系列、記錄</div><a class="blog-slider__button" href="2023/04/07/record3/" alt="">详情   </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" href="2023/05/15/plugins/" alt=""><img width="48" height="48" src="https://images7.alphacoders.com/695/695932.jpg" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2023-05-15</span><a class="blog-slider__title" href="2023/05/15/plugins/" alt="">Hexo 外掛標籤測試</a><div class="blog-slider__text">記錄Hexo撰寫Blog的過程(用來測試外掛標籤)</div><a class="blog-slider__button" href="2023/05/15/plugins/" alt="">详情   </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" href="2023/03/03/math/" alt=""><img width="48" height="48" src="https://i.etsystatic.com/7084552/r/il/6aeb27/1739362212/il_794xN.1739362212_i7e2.jpg" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2023-03-03</span><a class="blog-slider__title" href="2023/03/03/math/" alt="">Latex 測試</a><div class="blog-slider__text">記錄Hexo撰寫Blog的過程(用來測試Latex是否能使用)</div><a class="blog-slider__button" href="2023/03/03/math/" alt="">详情   </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" href="2023/11/14/hexo-butterfly/" alt=""><img width="48" height="48" src="https://pic1.zhimg.com/v2-41e1b825c51055f39c22b95777bc620b_1440w.jpg?source=172ae18b" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2023-11-14</span><a class="blog-slider__title" href="2023/11/14/hexo-butterfly/" alt="">hexo theme</a><div class="blog-slider__text">記錄Hexo撰寫Blog的過程(簡單記錄用Hexo開發的經歷)</div><a class="blog-slider__button" href="2023/11/14/hexo-butterfly/" alt="">详情   </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" href="2022/07/11/TEST-0/" alt=""><img width="48" height="48" src="https://images8.alphacoders.com/115/1156488.png" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2022-07-11</span><a class="blog-slider__title" href="2022/07/11/TEST-0/" alt="">Hexo測試 &amp; 部屬</a><div class="blog-slider__text">記錄Hexo撰寫Blog的過程(用來測試 hexo &amp; 部屬到Github的指令)</div><a class="blog-slider__button" href="2022/07/11/TEST-0/" alt="">详情   </a></div></div></div><div class="blog-slider__pagination swiper-pagination-clickable swiper-pagination-bullets"></div></div></div>';
+    console.log('已挂载butterfly_swiper')
+    parent_div_git.insertAdjacentHTML("afterbegin",item_html)
+    }
+  var elist = 'undefined'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var flag = 0;
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_swiper_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_swiper_injector_config();
+  }
+  </script><script defer src="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper.min.js"></script><script defer data-pjax src="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper_init.js"></script><script async src="//at.alicdn.com/t/font_2032782_8d5kxvn09md.js"></script><!-- hexo injector body_end end --></body></html>

@@ -1,3 +1,4 @@
+/* ------------------ Font Settings ------------------ */
 /* KiwiMaru */
 @font-face {
   font-family: 'KiwiMaru';
@@ -15,3 +16,124 @@
 body, .post-body {
   font-family: 'jf-openhuninn','KiwiMaru', sans-serif !important;
 }
+
+/* ------------------ Frame Style Button ------------------ */
+/* Ref: https://codepen.io/Tejas-Weldode/pen/WbNpaJd */
+/* ===== 原本按鈕基本樣式 ===== */
+.button--frame {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+
+  padding: 8px 14px;
+  margin: 6px 0;
+
+  background-color: #000; /* 默認黑色背景 */
+  color: #fff !important;
+  text-decoration: none !important;
+
+  --border-sub: 1px;
+  --sub: calc(14px + var(--border-sub));
+
+  clip-path: polygon(
+    var(--border-sub) var(--border-sub),
+    calc(100% - var(--border-sub)) var(--border-sub),
+    calc(100% - var(--border-sub)) calc(100% - var(--sub)),
+    calc(100% - var(--sub)) calc(100% - var(--border-sub)),
+    var(--border-sub) calc(100% - var(--border-sub))
+  );
+
+  overflow: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease, margin 0.3s ease;
+}
+
+/* 原本灰色邊框 */
+.button--frame::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-color: rgb(29, 29, 29);
+  z-index: -1;
+
+  --sub: 14px;
+  clip-path: polygon(
+    0 0,
+    100% 0,
+    100% calc(100% - var(--sub)),
+    calc(100% - var(--sub)) 100%,
+    0 100%
+  );
+
+  transition: background 0.3s ease;
+}
+
+/* 左上小三角 */
+.button--frame::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 10px;
+  height: 10px;
+  background-color: rgb(80, 80, 80);
+  clip-path: polygon(0 0, 100% 0, 0% 100%);
+}
+
+/* hover 邏輯保持原本 */
+.button--frame:hover::before,
+.button--frame:hover::after {
+  background-color: #3c3c3c;
+}
+
+/* icon / 文字 */
+.button--frame i,
+.button--frame span {
+  position: relative;
+  z-index: 1;
+  font-size: 13px;
+  line-height: 1;
+}
+
+/* ===== 深色 / 淺色模式自動切換 ===== */
+@media (prefers-color-scheme: dark) {
+  .button--frame {
+    background-color: #000;
+    color: #fff !important;
+  }
+
+  .button--frame::before {
+    background-color: rgb(29, 29, 29);
+  }
+
+  .button--frame::after {
+    background-color: rgb(80, 80, 80);
+  }
+
+  .button--frame:hover::before,
+  .button--frame:hover::after {
+    background-color: #3c3c3c;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  .button--frame {
+    background-color: #f0f0f0; /* 明亮底色 */
+    color: #111 !important;     /* 文字深色 */
+  }
+
+  .button--frame::before {
+    background-color: #d0d0d0; /* 灰色框，淺色可見 */
+  }
+
+  .button--frame::after {
+    background-color: #999999; /* 小三角也改成淺灰 */
+  }
+
+  .button--frame:hover::before,
+  .button--frame:hover::after {
+    background-color: #bbbbbb; /* hover 顯眼一點 */
+  }
+}
+
